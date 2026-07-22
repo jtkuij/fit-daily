@@ -1,0 +1,35 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#176b5b"><meta name="description" content="减肥日常记录与运动建议">
+<title>轻记 · 减肥日常</title>
+<link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg"><link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="app-header"><div><p class="eyebrow" id="todayLabel"></p><h1>轻记</h1></div><button class="icon-button" id="installButton" hidden title="安装到桌面">＋</button></header>
+<main>
+<section class="view active" id="todayView">
+<div class="summary-strip"><div><span>最近体重</span><strong id="currentWeightDisplay">--</strong><small>kg</small></div><div><span>累计变化</span><strong id="weightChangeDisplay">--</strong><small>kg</small></div><div><span>连续打卡</span><strong id="streakDisplay">0</strong><small>天</small></div></div>
+<section class="coach-band"><div class="section-heading"><div><p class="eyebrow">今日建议</p><h2 id="coachTitle">稳稳动起来</h2></div><span class="badge" id="coachDuration"></span></div><div id="coachPlan" class="coach-plan"></div></section>
+<form id="checkinForm" class="panel">
+<div class="section-heading form-title"><div><p class="eyebrow">每日打卡</p><h2>记录今天</h2></div><input id="recordDate" type="date" required></div>
+<div class="form-grid metrics"><label>体重（kg）<input id="weight" type="number" min="30" max="300" step="0.1" placeholder="例如：80.0"></label><label>睡眠（小时）<input id="sleep" type="number" min="0" max="24" step="0.5" placeholder="7.5"></label><label>步数<input id="steps" type="number" min="0" max="100000" step="100" placeholder="6000"></label><label>饮水（ml）<input id="water" type="number" min="0" max="10000" step="100" placeholder="1800"></label></div>
+<fieldset><legend>今天吃了什么</legend><div class="meal-grid"><label>早餐<textarea id="breakfast" rows="2" placeholder="两个鸡蛋、一杯牛奶"></textarea></label><label>午餐<textarea id="lunch" rows="2" placeholder="一碗米饭、青椒肉丝"></textarea></label><label>晚餐<textarea id="dinner" rows="2" placeholder="鸡胸肉沙拉"></textarea></label><label>加餐<textarea id="snacks" rows="2" placeholder="水果、饮料或零食"></textarea></label></div></fieldset>
+<fieldset><legend>运动完成情况</legend><div class="form-grid"><label>走路（分钟）<input id="walkMinutes" type="number" min="0" max="600" placeholder="30"></label><label>俯卧撑（个）<input id="pushups" type="number" min="0" max="1000" placeholder="0"></label></div></fieldset>
+<fieldset><legend>身体感受</legend><div class="segmented"><input type="radio" name="condition" id="good" value="good" checked><label for="good">状态不错</label><input type="radio" name="condition" id="tired" value="tired"><label for="tired">有点累</label><input type="radio" name="condition" id="pain" value="pain"><label for="pain">身体疼痛</label></div><label>备注<textarea id="notes" rows="3" placeholder="今天的感受或疼痛位置"></textarea></label></fieldset>
+<button class="primary" type="submit">保存今日记录</button><p class="message" id="formMessage"></p>
+</form>
+</section>
+<section class="view" id="historyView" hidden><div class="page-heading"><p class="eyebrow">全部记录</p><h2>打卡历史</h2></div><div id="historyList" class="history-list"></div></section>
+<section class="view" id="reportView" hidden><div class="section-heading page-heading"><div><p class="eyebrow">最近 7 天</p><h2>每周分析</h2></div><button class="secondary" id="copyReportButton">复制报告</button></div><div class="chart-wrap"><canvas id="weightChart"></canvas></div><div id="weeklyReport" class="weekly-report"></div></section>
+<section class="view" id="profileView" hidden><div class="page-heading"><p class="eyebrow">基础资料</p><h2>我的计划</h2></div>
+<form id="profileForm" class="panel"><div class="form-grid"><label>性别<select id="sex"><option value="male">男</option><option value="female">女</option></select></label><label>年龄<input id="age" type="number" min="12" max="100"></label><label>身高（cm）<input id="height" type="number" min="100" max="250"></label><label>初始体重（kg）<input id="startWeight" type="number" step="0.1"></label><label>目标体重（kg）<input id="targetWeight" type="number" step="0.1"></label><label>每日可运动（分钟）<input id="availableMinutes" type="number" min="10" max="180" step="5"></label></div><label class="check-row"><input id="healthConfirmed" type="checkbox">目前无已知高血压或心脏问题</label><button class="primary" type="submit">保存个人资料</button><p class="message" id="profileMessage"></p></form>
+<section class="data-tools"><h3>数据管理</h3><p>记录仅保存在当前浏览器，建议定期导出备份。</p><div class="tool-row"><button class="secondary" id="exportButton">导出备份</button><label class="secondary file-button">导入备份<input id="importInput" type="file" accept="application/json" hidden></label><button class="danger" id="clearButton">清空记录</button></div></section>
+</section>
+</main>
+<nav class="bottom-nav"><button class="nav-item active" data-view="todayView"><span>●</span>今日</button><button class="nav-item" data-view="historyView"><span>≡</span>记录</button><button class="nav-item" data-view="reportView"><span>↗</span>周报</button><button class="nav-item" data-view="profileView"><span>◎</span>我的</button></nav>
+<dialog id="confirmDialog"><h3>清空所有记录？</h3><p>此操作无法撤销，个人资料会保留。</p><div class="dialog-actions"><button class="secondary" id="cancelClearButton">取消</button><button class="danger" id="confirmClearButton">确认清空</button></div></dialog>
+<script src="app.js" defer></script>
+</body></html>
+
