@@ -17,6 +17,8 @@ function loadState(){
 }
 let state=loadState();
 let coachTarget={walk:0,pushups:0};
+function autosize(el){if(!el.value||!el.scrollHeight){el.style.height="";return}el.style.height="auto";el.style.height=el.scrollHeight+"px"}
+function autosizeAll(){$$(".meal-entry textarea,#notes").forEach(autosize)}
 function saveState(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}
 function sorted(dir="desc"){return [...state.records].sort((a,b)=>dir==="desc"?b.date.localeCompare(a.date):a.date.localeCompare(b.date))}
 function flash(el,text){el.textContent=text;setTimeout(()=>{if(el.textContent===text)el.textContent=""},2200)}
@@ -39,6 +41,7 @@ function fillRecord(date){
   const radio=document.querySelector('input[name="condition"][value="'+(r?.condition||"good")+'"]');
   if(radio)radio.checked=true;
   $$(".ai-result").forEach(el=>{el.textContent="";el.classList.remove("error")});
+  autosizeAll();
   renderRemaining();
   updateCalories();
 }
@@ -75,7 +78,7 @@ function renderSummary(){
   const change=current&&start?current-start:null;
   $("#currentWeight").textContent=current?current.toFixed(1):"--";
   $("#weightChange").textContent=change===null?"--":(change>0?"+":"")+change.toFixed(1);
-  $("#weightChange").style.color=change!==null&&change<=0?"#ce6a55":"#b95d4a";
+  $("#weightChange").style.color=change!==null&&change<=0?"#1aa267":"#ff2442";
   $("#streak").textContent=calculateStreak();
   $("#startLabel").textContent="初始 "+(start?Number(start).toFixed(1):"--")+" kg";
   $("#targetLabel").textContent="目标 "+(target?Number(target).toFixed(1):"--")+" kg";
@@ -136,8 +139,8 @@ function renderHistory(){
   const feelings={good:"状态不错",tired:"有点累",pain:"身体疼痛"};
   list.innerHTML=all.map(r=>{
     const meals=[[r.breakfast,"早餐",r.breakfastCal],[r.lunch,"午餐",r.lunchCal],[r.dinner,"晚餐",r.dinnerCal],[r.snacks,"加餐",r.snacksCal]]
-      .filter(x=>x[0]).map(x=>x[1]+"："+safe(x[0])+(x[2]!=null?"（"+x[2]+" kcal）":"")).join("<br>");
-    return '<article class="history-item"><div class="history-top"><span>'+dateText(r.date)+'</span><strong>'+(r.weight?Number(r.weight).toFixed(1)+" kg":"未记体重")+'</strong></div><div class="chips"><span>走路 '+(r.walkMinutes||0)+' 分钟</span><span>俯卧撑 '+(r.pushups||0)+' 个</span><span>摄入 '+mealCalories(r)+' kcal</span><span>'+(feelings[r.condition]||"状态未记")+'</span></div>'+(meals?'<p class="meals">'+meals+"</p>":"")+(r.notes?'<p class="meals">备注：'+safe(r.notes)+"</p>":"")+'<div class="history-actions"><button class="text-btn edit" data-date="'+safe(r.date)+'">编辑</button><button class="text-btn delete" data-date="'+safe(r.date)+'">删除</button></div></article>';
+      .filter(x=>x[0]).map(x=>x[1]+"："+safe(x[0])+(x[2]!=null?" <i>"+Number(x[2])+" kcal</i>":"")).join("<br>");
+    return '<article class="history-item c-'+({good:1,tired:1,pain:1}[r.condition]?r.condition:"good")+'"><div class="history-top"><span>'+dateText(r.date)+'</span><strong>'+(r.weight?Number(r.weight).toFixed(1)+" kg":"未记体重")+'</strong></div><div class="chips"><span>走路 '+(r.walkMinutes||0)+' 分钟</span><span>俯卧撑 '+(r.pushups||0)+' 个</span><span>摄入 '+mealCalories(r)+' kcal</span><span>'+(feelings[r.condition]||"状态未记")+'</span></div>'+(meals?'<p class="meals">'+meals+"</p>":"")+(r.notes?'<p class="meals">备注：'+safe(r.notes)+"</p>":"")+'<div class="history-actions"><button class="text-btn edit" data-date="'+safe(r.date)+'">编辑</button><button class="text-btn delete" data-date="'+safe(r.date)+'">删除</button></div></article>';
   }).join("");
 }
 function weekData(){
@@ -159,16 +162,16 @@ function weekData(){
 }
 function renderChart(weights){
   const svg=$("#weightChart");
-  if(weights.length<2){svg.innerHTML='<text x="165" y="82" text-anchor="middle" fill="#7d6f6a" font-size="11">记录至少两次体重后显示趋势</text>';return}
+  if(weights.length<2){svg.innerHTML='<text x="165" y="82" text-anchor="middle" fill="#999999" font-size="11">记录至少两次体重后显示趋势</text>';return}
   const values=weights.map(r=>Number(r.weight));
   let min=Math.min(...values),max=Math.max(...values);
   if(max-min<1){min-=.5;max+=.5}
   const left=35,right=320,top=20,bottom=130;
   const points=weights.map((r,i)=>({x:left+i*(right-left)/(weights.length-1),y:top+(max-r.weight)*(bottom-top)/(max-min),r}));
-  let html='<g stroke="#eadfda"><path d="M35 20H320M35 75H320M35 130H320"/></g>';
-  html+='<polyline points="'+points.map(p=>p.x+","+p.y).join(" ")+'" fill="none" stroke="#ce6a55" stroke-width="4"/>';
-  html+='<g fill="#ce6a55">'+points.map(p=>'<circle cx="'+p.x+'" cy="'+p.y+'" r="4"/>').join("")+"</g>";
-  html+='<g fill="#7d6f6a" font-size="9"><text x="3" y="24">'+max.toFixed(1)+'</text><text x="3" y="79">'+((max+min)/2).toFixed(1)+'</text><text x="3" y="134">'+min.toFixed(1)+'</text>';
+  let html='<g stroke="#f0f0f0"><path d="M35 20H320M35 75H320M35 130H320"/></g>';
+  html+='<polyline points="'+points.map(p=>p.x+","+p.y).join(" ")+'" fill="none" stroke="#ff2442" stroke-width="4"/>';
+  html+='<g fill="#ff2442">'+points.map(p=>'<circle cx="'+p.x+'" cy="'+p.y+'" r="4"/>').join("")+"</g>";
+  html+='<g fill="#999999" font-size="9"><text x="3" y="24">'+max.toFixed(1)+'</text><text x="3" y="79">'+((max+min)/2).toFixed(1)+'</text><text x="3" y="134">'+min.toFixed(1)+'</text>';
   html+=points.map((p,i)=>(i===0||i===points.length-1||i===Math.floor(points.length/2))?'<text x="'+(p.x-9)+'" y="153">'+dateText(p.r.date,{month:"numeric",day:"numeric"})+"</text>":"").join("")+"</g>";
   svg.innerHTML=html;
 }
@@ -215,6 +218,7 @@ $("#checkForm").addEventListener("submit",e=>{
 });
 $("#recordDate").addEventListener("change",e=>fillRecord(e.target.value));
 $$(".meal-cal").forEach(input=>input.addEventListener("input",updateCalories));
+$$(".meal-entry textarea,#notes").forEach(el=>el.addEventListener("input",()=>autosize(el)));
 ["walkMinutes","pushups"].forEach(id=>$("#"+id).addEventListener("input",renderRemaining));
 $("#profileForm").addEventListener("submit",e=>{
   e.preventDefault();
@@ -232,6 +236,7 @@ $("nav").addEventListener("click",e=>{
   $$(".view").forEach(v=>v.hidden=v.id!==btn.dataset.view);
   scrollTo({top:0,behavior:"smooth"});
   if(btn.dataset.view==="reportView")requestAnimationFrame(renderReport);
+  if(btn.dataset.view==="todayView")requestAnimationFrame(autosizeAll);
 });
 $("#historyList").addEventListener("click",e=>{
   const btn=e.target.closest("[data-date]");if(!btn)return;
@@ -266,7 +271,15 @@ $("#clearBtn").addEventListener("click",()=>{
 });
 
 // ---- AI 热量估算（Claude API）----
-const API_KEY_STORAGE="lsc-anthropic-key",API_BASE_STORAGE="lsc-anthropic-base-url";
+const API_KEY_STORAGE="lsc-anthropic-key",API_BASE_STORAGE="lsc-anthropic-base-url",API_PROVIDER_STORAGE="lsc-ai-provider";
+const OPENAI_COMPAT={
+  bailian:{base:"https://dashscope.aliyuncs.com/compatible-mode/v1",model:"qwen-plus",name:"百炼"},
+  deepseek:{base:"https://api.deepseek.com",model:"deepseek-chat",name:"DeepSeek"},
+  custom:{base:"",model:"",name:"自定义"}
+};
+const API_MODEL_STORAGE="lsc-ai-model";
+const ESTIMATE_PROMPT="你是营养师，根据用户描述的一餐估算热量。按中国常见做法和份量估算；用户没写份量时按普通成年人一份估计，并在 amount 里写出你假设的份量。items 逐项列出食物，kcal 为整数，total_kcal 为各项之和。note 用一句中文简短说明估算依据或需注意的地方（如油、酱料、含糖饮料）。";
+const aiProvider=()=>localStorage.getItem(API_PROVIDER_STORAGE)||"bailian";
 const MEAL_NAMES={breakfast:"早餐",lunch:"午餐",dinner:"晚餐",snacks:"加餐"};
 const ESTIMATE_SCHEMA={
   type:"object",
@@ -279,9 +292,38 @@ const ESTIMATE_SCHEMA={
   additionalProperties:false
 };
 let anthropicModule;
+async function estimateOpenAICompat(apiKey,meal,text){
+  const cfg=OPENAI_COMPAT[aiProvider()];
+  const base=(localStorage.getItem(API_BASE_STORAGE)||cfg.base).replace(/[/]+$/,"");
+  const model=localStorage.getItem(API_MODEL_STORAGE)||cfg.model;
+  if(!base)throw Error("自定义服务商需要在「我的」页面填写 API 地址（例如 https://xxx/v1）");
+  if(!model)throw Error("请在「我的」页面填写模型名（用你 Key 所在分组支持的模型）");
+  const res=await fetch(base+"/chat/completions",{
+    method:"POST",
+    headers:{"Content-Type":"application/json",Authorization:"Bearer "+apiKey},
+    body:JSON.stringify({
+      model,
+      temperature:0.2,
+      response_format:{type:"json_object"},
+      messages:[
+        {role:"system",content:ESTIMATE_PROMPT+"只输出 JSON，格式：{\"items\":[{\"name\":\"\",\"amount\":\"\",\"kcal\":0}],\"total_kcal\":0,\"note\":\"\"}"},
+        {role:"user",content:MEAL_NAMES[meal]+"："+text}
+      ]
+    })
+  });
+  const data=await res.json().catch(()=>({}));
+  if(!res.ok){const e=Error(data?.error?.message||"请求失败（"+res.status+"）");e.status=res.status;e.detail=data?.error?.message||"";throw e}
+  const content=data?.choices?.[0]?.message?.content;
+  if(!content)throw Error("没有拿到估算结果，请重试");
+  let r;try{r=JSON.parse(content)}catch{throw Error("返回内容不是有效格式，请重试")}
+  if(!Array.isArray(r.items)||!Number.isFinite(Number(r.total_kcal)))throw Error("返回内容不完整，请重试");
+  r.total_kcal=Math.round(Number(r.total_kcal));
+  return r;
+}
 async function estimateCalories(meal,text){
   const apiKey=localStorage.getItem(API_KEY_STORAGE);
   if(!apiKey)throw Error("请先在「我的」页面填入 API Key");
+  if(aiProvider()in OPENAI_COMPAT)return estimateOpenAICompat(apiKey,meal,text);
   anthropicModule??=await import("https://esm.sh/@anthropic-ai/sdk@1.8.0");
   const Anthropic=anthropicModule.default;
   const baseURL=localStorage.getItem(API_BASE_STORAGE)||undefined;
@@ -292,7 +334,7 @@ async function estimateCalories(meal,text){
     betas:["server-side-fallback-2026-07-01"],
     fallbacks:"default",
     output_config:{effort:"low",format:{type:"json_schema",schema:ESTIMATE_SCHEMA}},
-    system:"你是营养师，根据用户描述的一餐估算热量。按中国常见做法和份量估算；用户没写份量时按普通成年人一份估计，并在 amount 里写出你假设的份量。items 逐项列出食物，kcal 为整数，total_kcal 为各项之和。note 用一句中文简短说明估算依据或需注意的地方（如油、酱料、含糖饮料）。",
+    system:ESTIMATE_PROMPT,
     messages:[{role:"user",content:MEAL_NAMES[meal]+"："+text}]
   });
   if(response.stop_reason==="refusal")throw Error("这次请求被拒绝了，换个描述再试试");
@@ -304,9 +346,12 @@ async function estimateCalories(meal,text){
 function apiErrorText(err){
   const status=err?.status;
   if(status===401)return"API Key 无效，请到「我的」页面检查";
-  if(status===403)return"当前网络或地区无法访问该 API 地址，请在「我的」页面填写可用的 API 地址";
+  const detail=err?.detail||err?.error?.error?.message||err?.error?.message||"";
+  const used=localStorage.getItem(API_BASE_STORAGE)||(OPENAI_COMPAT[aiProvider()]?OPENAI_COMPAT[aiProvider()].name+"默认地址":"官方地址 api.anthropic.com");
+  if(status===403)return"请求被拒绝（403）。当前使用："+used+(detail?"。服务端返回："+detail:"")+"。若用的是官方地址，请在「我的」页面填写可用的 API 地址；若已填中转，请检查 Key 是否有权限";
   if(status===429)return"请求太频繁或额度不足，稍后再试";
-  if(status>=500)return"Claude 服务暂时繁忙，稍后再试";
+  if(status>=500)return"AI 服务返回 "+status+"。当前使用："+used+"，服务商："+aiProvider()+(detail?"。服务端返回："+detail:"")+"。可稍后重试；若一直如此，可能是该地址不支持这种请求，请换服务商或地址再试";
+  if(status===400||status===404)return"请求不被接受（"+status+"）。当前使用："+used+"，服务商："+aiProvider()+(detail?"。服务端返回："+detail:"")+"。请检查服务商与 API 地址是否匹配（Claude 只写域名，不带 /v1）";
   if(err instanceof TypeError||err?.name==="APIConnectionError")return"网络连接失败，请检查网络";
   return err?.message||"估算失败，请重试";
 }
@@ -318,25 +363,32 @@ $$(".ai-btn").forEach(btn=>btn.addEventListener("click",async()=>{
   try{
     const r=await estimateCalories(meal,text);
     $("#"+meal+"Cal").value=r.total_kcal;updateCalories();
-    out.innerHTML=r.items.map(i=>safe(i.name)+"（"+safe(i.amount)+"）"+Number(i.kcal)+" kcal").join("；")+(r.note?"<br>"+safe(r.note):"");
+    out.innerHTML=r.items.map(i=>'<span class="ai-item"><span>'+safe(i.name)+'<em>'+safe(i.amount)+'</em></span><b>'+Number(i.kcal)+' kcal</b></span>').join("")+(r.note?'<span class="ai-note">'+safe(r.note)+"</span>":"");
   }catch(err){out.classList.add("error");out.textContent=apiErrorText(err)}
   finally{btn.disabled=false;btn.textContent="AI估算"}
 }));
 $("#apiKey").value=localStorage.getItem(API_KEY_STORAGE)||"";
 $("#apiBase").value=localStorage.getItem(API_BASE_STORAGE)||"";
+$("#aiProvider").value=aiProvider();
+$("#aiModel").value=localStorage.getItem(API_MODEL_STORAGE)||"";
 $("#saveKeyBtn").addEventListener("click",()=>{
   const key=$("#apiKey").value.trim();
   if(!key){flash($("#keyMessage"),"请输入 API Key");return}
   const base=$("#apiBase").value.trim().replace(/\/+$/,"");
   if(base&&!base.startsWith("https://")){flash($("#keyMessage"),"API 地址需以 https:// 开头");return}
-  localStorage.setItem(API_KEY_STORAGE,key);
+  localStorage.setItem(API_KEY_STORAGE,key);localStorage.setItem(API_PROVIDER_STORAGE,$("#aiProvider").value);
+  const model=$("#aiModel").value.trim();if(model)localStorage.setItem(API_MODEL_STORAGE,model);else localStorage.removeItem(API_MODEL_STORAGE);
   if(base)localStorage.setItem(API_BASE_STORAGE,base);else localStorage.removeItem(API_BASE_STORAGE);
   flash($("#keyMessage"),"AI 设置已保存在本机");
 });
-$("#clearKeyBtn").addEventListener("click",()=>{localStorage.removeItem(API_KEY_STORAGE);localStorage.removeItem(API_BASE_STORAGE);$("#apiKey").value="";$("#apiBase").value="";flash($("#keyMessage"),"AI 设置已清除")});
+$("#clearKeyBtn").addEventListener("click",()=>{localStorage.removeItem(API_KEY_STORAGE);localStorage.removeItem(API_BASE_STORAGE);localStorage.removeItem(API_PROVIDER_STORAGE);localStorage.removeItem(API_MODEL_STORAGE);$("#aiModel").value="";$("#aiProvider").value="bailian";$("#apiKey").value="";$("#apiBase").value="";flash($("#keyMessage"),"AI 设置已清除")});
 
 let installPrompt;
 addEventListener("beforeinstallprompt",e=>{e.preventDefault();installPrompt=e;$("#installBtn").hidden=false});
+$("#navAdd").addEventListener("click",()=>{
+  if($("#todayView").hidden)document.querySelector('[data-view="todayView"]').click();
+  setTimeout(()=>$("#checkForm").scrollIntoView({behavior:"smooth",block:"start"}),60);
+});
 $("#installBtn").addEventListener("click",async()=>{if(!installPrompt)return;installPrompt.prompt();await installPrompt.userChoice;installPrompt=null;$("#installBtn").hidden=true});
 
 const now=new Date();

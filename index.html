@@ -3,32 +3,187 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#ce6a55">
+<meta name="theme-color" content="#ffffff">
 <meta name="description" content="LSC减肥日常记录、热量管理与每周分析">
 <title>LSC · 减肥日常</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <style>
-:root{--bg:#f8f4f2;--surface:#fff;--ink:#302522;--muted:#7d6f6a;--line:#eadfda;--green:#ce6a55;--dark:#315e50;--soft:#fbe9e4;--yellow:#e7aa3f;--yellow-soft:#fff1d7;--blue:#5a7fa3;--coral:#c85e4c;--shadow:0 12px 30px rgba(90,62,53,.09);font-family:"Microsoft YaHei","PingFang SC",system-ui,sans-serif}
-*{box-sizing:border-box}body{margin:0;min-width:320px;color:var(--ink);background:var(--bg);letter-spacing:0;-webkit-font-smoothing:antialiased}button,input,textarea,select{font:inherit}button{cursor:pointer}h1,h2,h3,p{margin-top:0}.demo-tag{position:fixed;top:8px;left:50%;z-index:30;padding:6px 10px;color:#493713;background:var(--yellow-soft);border:1px solid #e8cb8e;border-radius:5px;font-size:10px;font-weight:900;transform:translateX(-50%)}
-header{position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center;width:min(720px,100%);margin:auto;padding:calc(12px + env(safe-area-inset-top)) 18px 12px;background:rgba(255,252,250,.96);border-bottom:1px solid var(--line);backdrop-filter:blur(14px)}.brand{display:grid;width:38px;height:38px;margin-right:11px;place-items:center;color:#fff;background:var(--green);border-radius:7px;font-weight:900}.brand-copy h1{margin-bottom:2px;font-size:20px}.brand-copy p{margin:0;color:var(--muted);font-size:11px}
-main{width:min(720px,100%);margin:auto;padding:20px 18px 95px}.view[hidden]{display:none}.welcome{margin-bottom:18px;padding:4px 0 4px 13px;border-left:4px solid var(--yellow)}.welcome p{margin-bottom:5px;color:var(--muted);font-size:12px}.welcome h2{margin-bottom:0;font-size:25px}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);overflow:hidden;background:#fffdfc;border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow)}.stat{position:relative;padding:17px 14px;border-right:1px solid var(--line)}.stat:last-child{border:0}.stat:before{position:absolute;top:0;right:12px;left:12px;height:3px;content:"";background:var(--green)}.stat:nth-child(2):before{background:var(--blue)}.stat:nth-child(3):before{background:var(--yellow)}.stat span{display:block;margin-bottom:7px;color:var(--muted);font-size:10px}.stat strong{font-size:22px}.stat small{margin-left:3px;color:var(--muted);font-size:9px}
-.progress{padding:17px 2px}.progress-head,.progress-foot{display:flex;justify-content:space-between}.progress-head{margin-bottom:9px;font-size:11px;font-weight:800}.progress-head span:first-child,.progress-foot{color:var(--muted)}.track{overflow:hidden;height:7px;background:#d9e1dd;border-radius:4px}.track i{display:block;width:6%;height:100%;background:var(--yellow);border-radius:4px}.progress-foot{margin-top:7px;font-size:9px}
-.coach{margin:0 0 18px;padding:16px;color:#fff;background:var(--dark);border-top:4px solid #efb65a;border-radius:8px;box-shadow:0 5px 18px rgba(21,33,30,.05)}.row{display:flex;justify-content:space-between;align-items:flex-start;gap:14px}.eyebrow{margin-bottom:5px;color:var(--green);font-size:10px;font-weight:900}.coach .eyebrow{color:#add0c7}.coach h2{margin-bottom:0;font-size:19px}.badge{padding:7px 9px;color:#493713;background:var(--yellow-soft);border-radius:5px;font-size:10px;font-weight:900}.plans{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.plan{padding:10px 12px;background:rgba(255,255,255,.075);border:1px solid rgba(255,255,255,.1);border-left:3px solid #72b3a5;border-radius:5px}.plan b{display:block;margin-bottom:5px;font-size:14px}.plan span{color:#d7e8e3;font-size:11px;line-height:1.5}
-.panel{padding:20px;background:#fffdfc;border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow)}.panel-title{align-items:center;padding-bottom:17px;border-bottom:1px solid var(--line)}.panel-title h2{margin-bottom:0;font-size:21px}.panel-title input{width:145px;margin:0}.section{padding:20px 0;border-bottom:1px solid var(--line)}.section:last-of-type{border:0}.section-title{display:flex;align-items:center;gap:10px;margin-bottom:14px}.num{display:grid;flex:none;width:28px;height:28px;place-items:center;color:var(--green);background:var(--soft);border-radius:50%;font-size:9px;font-weight:900}.section-title h3{margin:0;font-size:14px}.section-title p{margin:2px 0 0;color:var(--muted);font-size:9px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}label{display:block;color:#4d5955;font-size:11px;font-weight:800}input,textarea,select{width:100%;margin-top:6px;padding:11px 12px;color:var(--ink);background:#fcf8f6;border:1px solid #ccd7d1;border-radius:5px;outline:0}input:focus,textarea:focus,select:focus{background:#fff;border-color:var(--green);box-shadow:0 0 0 3px rgba(23,107,91,.11)}textarea{resize:vertical;line-height:1.5}.segments{display:grid;grid-template-columns:repeat(3,1fr);margin-bottom:13px}.segments input{position:absolute;opacity:0}.segments label{padding:10px 4px;text-align:center;background:#fcf8f6;border:1px solid #ccd7d1;border-right:0}.segments label:last-of-type{border-right:1px solid #ccd7d1}.segments input:checked+label{color:#fff;background:var(--green);border-color:var(--green)}
-.primary,.secondary{min-height:42px;padding:10px 14px;border-radius:5px;font-weight:900}.primary{display:flex;justify-content:space-between;width:100%;color:#fff;background:var(--green);border:1px solid var(--green)}.secondary{color:var(--green);background:#fff;border:1px solid #aebfb8}.message{min-height:18px;margin:9px 0 -4px;color:var(--green);text-align:center;font-size:11px}
-.page-head{margin:5px 0 20px}.page-head h2{margin-bottom:4px;font-size:24px}.page-head>p:last-child{color:var(--muted);font-size:11px}.history{display:grid;gap:10px}.history-item{padding:16px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--green);border-radius:8px}.history-top{display:flex;justify-content:space-between;font-size:12px;font-weight:900}.history-top strong{color:var(--green);font-size:17px}.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:11px}.chips span{padding:5px 7px;color:#586560;background:#fcf8f6;border-radius:4px;font-size:9px}.meals{margin:12px 0 0;color:#3c4743;font-size:11px;line-height:1.7}
-.calorie-summary{margin-bottom:18px;padding:16px;background:#fff;border:1px solid var(--line);border-radius:8px;box-shadow:0 5px 18px rgba(21,33,30,.05)}.calorie-grid{display:grid;grid-template-columns:repeat(3,1fr);margin-bottom:12px}.calorie-item{padding:0 12px;border-right:1px solid var(--line)}.calorie-item:first-child{padding-left:0}.calorie-item:last-child{padding-right:0;border:0}.calorie-item span{display:block;margin-bottom:5px;color:var(--muted);font-size:9px}.calorie-item strong{font-size:18px}.calorie-item small{margin-left:3px;color:var(--muted);font-size:8px}.calorie-item.remaining strong{color:var(--coral)}.calorie-track{overflow:hidden;height:6px;background:#e3e8e5;border-radius:3px}.calorie-track i{display:block;width:82%;height:100%;background:var(--blue);border-radius:3px}.calorie-note{display:flex;justify-content:space-between;margin-top:6px;color:var(--muted);font-size:9px}.meal-entry{padding:11px;background:#fcf8f6;border:1px solid var(--line);border-radius:6px}.meal-entry textarea{background:#fff}.kcal-row{display:grid;grid-template-columns:auto 1fr auto auto;align-items:center;gap:8px;margin-top:8px;color:var(--muted);font-size:9px}.kcal-row input{margin:0;padding:8px 9px;background:#fff}.kcal-row b{color:var(--blue);font-size:9px}.ai-btn{padding:7px 10px;color:#fff;background:var(--blue);border:0;border-radius:5px;font-size:11px;font-weight:900;white-space:nowrap}.ai-btn:disabled{opacity:.6;cursor:wait}.ai-result{margin:8px 0 0;color:var(--muted);font-size:11px;line-height:1.6}.ai-result:empty{display:none}.ai-result.error{color:var(--coral)}.ai-tools{margin-bottom:16px}.ai-tools input{margin:8px 0 10px}
-.chart{height:220px;margin-bottom:13px;padding:15px;background:#fff;border:1px solid var(--line);border-radius:8px}.chart p{margin-bottom:8px;color:var(--muted);font-size:10px;font-weight:800}.chart svg{width:100%;height:165px}.report-stats{display:grid;grid-template-columns:repeat(4,1fr);overflow:hidden;margin-bottom:10px;background:var(--line);border:1px solid var(--line);border-radius:8px}.report-stat{padding:15px 6px;text-align:center;background:#fff}.report-stat strong{display:block;margin-bottom:4px;font-size:18px}.report-stat span{color:var(--muted);font-size:9px}.report-block{margin-bottom:10px;padding:16px;background:#fff;border-left:4px solid var(--green)}.report-block.warn{border-color:var(--yellow)}.report-block h3{margin-bottom:7px;font-size:15px}.report-block p{margin:0;color:#4e5a56;font-size:12px;line-height:1.7}.profile-grid{margin-bottom:16px}
-nav{position:fixed;right:0;bottom:0;left:0;z-index:20;display:grid;grid-template-columns:repeat(4,1fr);width:min(720px,100%);margin:auto;padding:5px 8px calc(5px + env(safe-area-inset-bottom));background:rgba(255,252,250,.97);border-top:1px solid var(--line);box-shadow:0 -8px 22px rgba(21,33,30,.07)}.nav-btn{position:relative;min-height:55px;padding:5px;color:var(--muted);background:transparent;border:0;font-size:9px;font-weight:900}.nav-btn span{display:block;height:24px;font-size:18px}.nav-btn.active{color:var(--green)}.nav-btn.active:after{position:absolute;bottom:0;left:50%;width:18px;height:3px;content:"";background:var(--yellow);border-radius:2px;transform:translateX(-50%)}
-@media(max-width:520px){.report-stats{grid-template-columns:repeat(2,1fr)}main{padding-right:14px;padding-left:14px}.coach{padding:14px}.panel{padding:16px 14px}.grid{grid-template-columns:1fr}.metrics{grid-template-columns:1fr 1fr}.plans{grid-template-columns:1fr}.stat{padding:16px 8px}.stat strong{font-size:19px}.stat small{display:block;margin:3px 0 0}}
-.brand-side{display:flex;align-items:center}.install-btn{display:grid;width:40px;height:40px;place-items:center;color:var(--green);background:#fff;border:1px solid var(--line);border-radius:50%;font-size:22px}.install-btn[hidden]{display:none}.empty{padding:42px 18px;color:var(--muted);text-align:center;background:#fffdfc;border:1px dashed #d5c7c1;border-radius:8px;font-size:12px}.history-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:12px;padding-top:10px;border-top:1px solid var(--line)}.text-btn{padding:5px 8px;color:var(--blue);background:transparent;border:0;font-size:10px;font-weight:900}.text-btn.delete{color:var(--coral)}.check-row{display:flex;align-items:center;gap:8px;margin:15px 0;padding:11px;background:var(--soft);border-radius:5px}.check-row input{flex:none;width:18px;height:18px;margin:0}.data-tools{margin-top:14px;padding:17px;background:#fffdfc;border:1px solid var(--line);border-radius:8px}.data-tools h3{margin-bottom:5px}.data-tools p{color:var(--muted);font-size:10px;line-height:1.6}.tools{display:flex;flex-wrap:wrap;gap:7px}.danger{min-height:42px;padding:10px 14px;color:var(--coral);background:#fff;border:1px solid #d9aaa0;border-radius:5px;font-weight:900}.file-btn{display:inline-flex;align-items:center}.chart svg{display:block;width:100%;height:165px}.report-content{display:grid;gap:10px}
+:root{--bg:#f6f6f6;--surface:#fff;--ink:#222;--sub:#555;--muted:#999;--line:#f0f0f0;--red:#ff2442;--red-d:#e01c39;--red-soft:#fff0f2;--green:#1aa267;--amber-soft:#fff6e0;--radius:16px;color-scheme:light;font-family:-apple-system,"PingFang SC","Helvetica Neue","Microsoft YaHei",system-ui,sans-serif}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{overflow-x:clip}
+body{margin:0;min-width:320px;color:var(--ink);background:var(--bg);font-size:15px;-webkit-font-smoothing:antialiased}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+h1,h2,h3,p{margin-top:0}
 
-.remain{margin:10px 0 0;padding:9px 12px;color:#493713;background:var(--yellow-soft);border-radius:5px;font-size:13px;font-weight:800}.remain.done{color:#fff;background:rgba(255,255,255,.14)}.remain:empty{display:none}
-/* compact layout: less scrolling */
-main{padding-top:12px}.stat{padding:11px 12px}.progress{padding:10px 2px}.calorie-summary{margin-bottom:12px;padding:12px}.calorie-grid{margin-bottom:8px}.coach{margin-bottom:12px}.plan{padding:8px 10px}.panel{padding:14px}.panel-title{padding-bottom:10px}.section{padding:12px 0}.section-title{margin-bottom:8px}.section-title p{display:none}.num{width:22px;height:22px}.grid{gap:8px}.meal-entry{padding:8px}.kcal-row{margin-top:6px}input,textarea,select{margin-top:4px;padding:8px 10px}.segments{margin-bottom:8px}.segments label{padding:8px 4px}
-@media(max-width:520px){.grid.pair,.plans{grid-template-columns:1fr 1fr}}
+/* header */
+header{position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center;width:min(720px,100%);margin:auto;padding:calc(10px + env(safe-area-inset-top)) 14px 10px;background:rgba(255,255,255,.96);border-bottom:1px solid var(--line);backdrop-filter:blur(14px)}
+.brand-side{display:flex;align-items:center;gap:10px}
+.brand{display:grid;width:34px;height:34px;place-items:center;color:#fff;background:linear-gradient(135deg,#ff4d67,#ff2442);border-radius:10px;font-weight:900}
+.brand-copy h1{margin:0;font-size:18px;font-weight:800;line-height:1.2}
+.brand-copy p{margin:1px 0 0;color:var(--muted);font-size:11px}
+.install-btn{display:grid;width:34px;height:34px;place-items:center;color:var(--red);background:var(--red-soft);border:0;border-radius:50%;font-size:20px}
+.install-btn[hidden]{display:none}
+main{width:min(720px,100%);margin:auto;padding:10px 12px 96px}
+.view[hidden]{display:none}
+
+/* shared bits */
+.row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.eyebrow{margin:0 0 3px;color:var(--muted);font-size:12px}
+.empty{padding:40px 16px;color:var(--muted);text-align:center;font-size:13px}
+.page-head{margin:6px 2px 14px}
+.page-head h2{margin:0 0 4px;font-size:22px;font-weight:800}
+.page-head>p:last-child,.page-head>div>p:last-child{margin:0;color:var(--muted);font-size:12px}
+
+/* top cards */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);margin-bottom:10px;padding:14px 0;background:var(--surface);border-radius:var(--radius)}
+.stat{padding:0 14px;border-right:1px solid var(--line)}
+.stat:last-child{border-right:0}
+.stat span{display:block;margin-bottom:4px;color:var(--muted);font-size:12px}
+.stat strong{font-size:24px;font-weight:800}
+.stat small{margin-left:3px;color:var(--muted);font-size:11px}
+.progress{margin-bottom:10px;padding:14px;background:var(--surface);border-radius:var(--radius)}
+.progress-head,.progress-foot{display:flex;justify-content:space-between}
+.progress-head{margin-bottom:10px;font-size:13px;font-weight:800}
+.progress-head span:first-child,.progress-foot{color:var(--muted)}
+.progress-foot{margin-top:8px;font-size:11px}
+.track,.calorie-track{overflow:hidden;height:6px;background:#f1f1f1;border-radius:99px}
+.track i,.calorie-track i{display:block;height:100%;background:linear-gradient(90deg,#ff7a8a,#ff2442);border-radius:99px;transition:width .3s}
+.calorie-summary{margin-bottom:10px;padding:14px;background:var(--surface);border-radius:var(--radius)}
+.calorie-grid{display:grid;grid-template-columns:repeat(3,1fr);margin-bottom:12px}
+.calorie-item{padding:0 12px;border-right:1px solid var(--line)}
+.calorie-item:first-child{padding-left:0}
+.calorie-item:last-child{padding-right:0;border-right:0}
+.calorie-item span{display:block;margin-bottom:4px;color:var(--muted);font-size:12px}
+.calorie-item strong{font-size:22px;font-weight:800}
+.calorie-item small{margin-left:3px;color:var(--muted);font-size:11px}
+.calorie-item.remaining strong{color:var(--red)}
+.calorie-note{display:flex;justify-content:space-between;margin-top:8px;color:var(--muted);font-size:11px}
+
+/* coach hero */
+.coach{margin-bottom:10px;padding:16px;color:#fff;background:linear-gradient(135deg,#ff5a73,#ff2442);border-radius:var(--radius);box-shadow:0 8px 20px rgba(255,36,66,.22)}
+.coach .eyebrow{color:rgba(255,255,255,.8)}
+.coach h2{margin:0;font-size:19px;font-weight:800}
+.badge{flex:none;padding:5px 11px;color:#fff;background:rgba(255,255,255,.22);border-radius:99px;font-size:12px;font-weight:700}
+.plans{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.plan{padding:10px 12px;background:rgba(255,255,255,.18);border-radius:12px}
+.plan b{display:block;margin-bottom:4px;font-size:14px}
+.plan span{color:rgba(255,255,255,.9);font-size:12px;line-height:1.5}
+.remain{margin:10px 0 0;padding:9px 12px;color:var(--red);background:#fff;border-radius:99px;font-size:13px;font-weight:800;text-align:center}
+.remain.done{color:#fff;background:rgba(255,255,255,.22)}
+.remain:empty{display:none}
+
+/* form panel */
+.panel{padding:14px;background:var(--surface);border-radius:var(--radius)}
+.panel-title{align-items:center;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.panel-title h2{margin:0;font-size:18px;font-weight:800}
+.panel-title input{width:140px;margin:0}
+#checkForm{scroll-margin-top:64px}
+.section{padding:14px 0;border-bottom:1px solid var(--line)}
+.section:last-of-type{border-bottom:0}
+.section-title{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.section-title .num,.section-title p{display:none}
+.section-title h3{display:flex;align-items:center;gap:7px;margin:0;font-size:15px;font-weight:800}
+.section-title h3:before{content:"";width:4px;height:15px;background:var(--red);border-radius:3px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+label{display:block;color:var(--sub);font-size:12px;font-weight:600}
+input,textarea,select{width:100%;margin-top:6px;padding:10px 12px;color:var(--ink);background:#f5f5f5;border:1px solid transparent;border-radius:10px;outline:0}
+input::placeholder,textarea::placeholder{color:#bbb}
+input:focus,textarea:focus,select:focus{background:#fff;border-color:var(--red);box-shadow:0 0 0 3px rgba(255,36,66,.1)}
+textarea{resize:none;line-height:1.5}
+
+/* feelings */
+.segments{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
+.segments input{position:absolute;width:1px;height:1px;margin:0;padding:0;border:0;opacity:0}
+.segments label{padding:9px 4px;color:var(--sub);background:#f5f5f5;border:1px solid transparent;border-radius:99px;font-size:13px;text-align:center}
+.segments input:checked+label{color:var(--red);background:var(--red-soft);border-color:var(--red);font-weight:800}
+
+/* meals */
+.meal-entry{padding:10px 12px;background:#fafafa;border-radius:12px}
+.meal-head{display:flex;justify-content:space-between;align-items:center}
+.meal-head b{font-size:14px}
+.kcal-box{display:flex;align-items:baseline;gap:5px}
+.kcal-box input{width:84px;margin:0;padding:5px 8px;font-size:16px;font-weight:800;text-align:right;background:#fff;border-color:#eee}
+.kcal-box i{color:var(--muted);font-size:11px;font-style:normal;font-weight:700}
+.meal-food{display:flex;gap:8px;align-items:stretch;margin-top:8px}
+.meal-food textarea{flex:1;min-width:0;min-height:40px;margin:0;overflow:hidden;background:#fff;border-color:#eee}
+.ai-btn{flex:none;padding:0 14px;color:var(--red);background:var(--red-soft);border:0;border-radius:99px;font-size:13px;font-weight:800;white-space:nowrap}
+.ai-btn:before{content:"✦ "}
+.ai-btn:disabled{opacity:.6;cursor:wait}
+.ai-result{margin:8px 0 0;padding:8px 10px;background:#fff;border-radius:10px;font-size:12px;line-height:1.5}
+.ai-result:empty{display:none}
+.ai-result.error{color:var(--red);background:var(--red-soft)}
+.ai-item{display:flex;justify-content:space-between;gap:8px}
+.ai-item em{margin-left:4px;color:var(--muted);font-size:11px;font-style:normal}
+.ai-item b{flex:none;color:var(--red)}
+.ai-note{display:block;margin-top:3px;color:var(--muted);font-size:11px}
+
+/* buttons */
+.primary{display:flex;justify-content:center;gap:8px;width:100%;min-height:46px;padding:12px 16px;color:#fff;background:linear-gradient(135deg,#ff4d67,#ff2442);border:0;border-radius:99px;font-weight:800;box-shadow:0 6px 16px rgba(255,36,66,.28)}
+.primary:active{transform:scale(.98)}
+.secondary,.danger{min-height:38px;padding:8px 16px;background:#fff;border-radius:99px;font-weight:700}
+.secondary{color:var(--red);border:1px solid var(--red)}
+.danger{color:var(--sub);border:1px solid #ddd}
+.file-btn{display:inline-flex;align-items:center}
+.text-btn{padding:6px 10px;color:var(--muted);background:transparent;border:0;font-size:12px}
+.text-btn.delete{color:var(--red)}
+.message{min-height:18px;margin:10px 0 0;color:var(--green);font-size:13px;text-align:center}
+
+/* history: two-column feed */
+.history{column-count:2;column-gap:10px}
+.history .empty{column-span:all}
+.history-item{display:inline-block;width:100%;margin:0 0 10px;overflow:hidden;background:var(--surface);border-radius:14px;break-inside:avoid;-webkit-column-break-inside:avoid}
+.history-top{display:flex;flex-direction:column;gap:2px;padding:12px;background:var(--red-soft);color:var(--muted);font-size:12px}
+.history-top strong{color:var(--ink);font-size:22px;font-weight:800}
+.history-item.c-tired .history-top{background:var(--amber-soft)}
+.history-item.c-pain .history-top{background:#efefef}
+.chips{display:flex;flex-wrap:wrap;gap:5px;padding:10px 12px 0}
+.chips span{padding:3px 8px;color:var(--sub);background:#f6f6f6;border-radius:99px;font-size:11px}
+.meals{margin:0;padding:8px 12px 0;color:var(--sub);font-size:12px;line-height:1.6;overflow-wrap:anywhere}.meals i{color:var(--red);font-size:11px;font-style:normal;font-weight:700;white-space:nowrap}
+.history-actions{display:flex;justify-content:flex-end;padding:4px 6px 6px}
+
+/* report */
+.chart{height:230px;margin-bottom:10px;padding:14px;background:var(--surface);border-radius:var(--radius)}
+.chart p{margin-bottom:8px;font-size:13px;font-weight:800}
+.chart svg{width:100%;height:165px}
+.report-content{display:grid;gap:10px}
+.report-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.report-stat{padding:12px 6px;background:var(--surface);border-radius:14px;text-align:center}
+.report-stat strong{display:block;margin-bottom:3px;color:var(--red);font-size:18px;font-weight:800}
+.report-stat span{color:var(--muted);font-size:11px}
+.report-block{padding:14px;background:var(--surface);border-radius:var(--radius)}
+.report-block h3{margin-bottom:6px;font-size:15px}
+.report-block p{margin:0;color:var(--sub);font-size:13px;line-height:1.7}
+.report-block.warn{background:var(--red-soft)}
+.report-block.warn h3{color:var(--red)}
+
+/* profile */
+.profile-grid{margin-bottom:14px}
+.check-row{display:flex;align-items:center;gap:9px;margin-bottom:16px}
+.check-row input{width:18px;height:18px;margin:0;accent-color:var(--red)}
+#profileForm{margin-bottom:10px}
+.data-tools{margin-top:10px;padding:14px;background:var(--surface);border-radius:var(--radius)}
+.data-tools h3{margin-bottom:4px;font-size:15px}
+.data-tools p{color:var(--muted);font-size:12px;line-height:1.6}
+.ai-tools input,.ai-tools select{margin:0 0 8px}
+.tools{display:flex;flex-wrap:wrap;gap:8px}
+
+/* bottom nav */
+nav{position:fixed;right:0;bottom:0;left:0;z-index:20;display:grid;grid-template-columns:repeat(5,1fr);align-items:center;width:min(720px,100%);margin:auto;padding:4px 6px calc(4px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid var(--line)}
+.nav-btn{min-height:50px;padding:4px 0;color:var(--muted);background:transparent;border:0;font-size:11px;font-weight:600}
+.nav-btn svg{display:block;width:23px;height:23px;margin:0 auto 2px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.nav-btn.active{color:var(--red);font-weight:800}
+.nav-add{width:52px;height:36px;margin:auto;color:#fff;background:linear-gradient(135deg,#ff4d67,#ff2442);border:0;border-radius:12px;font-size:26px;font-weight:300;line-height:1;box-shadow:0 4px 12px rgba(255,36,66,.35)}
+.nav-add:active{transform:scale(.94)}
+
+@media(max-width:520px){
+  .grid{grid-template-columns:1fr}
+  .metrics,.pair,.profile-grid{grid-template-columns:1fr 1fr}
+  .report-stats{grid-template-columns:1fr 1fr}
+}
+@media(min-width:640px){.history{column-count:3}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
 </style>
 </head>
 <body>
@@ -44,10 +199,10 @@ main{padding-top:12px}.stat{padding:11px 12px}.progress{padding:10px 2px}.calori
     <div class="row panel-title"><div><p class="eyebrow">今天的记录</p><h2>留住今天的小进步</h2></div><input id="recordDate" type="date" required></div>
     <section class="section"><div class="section-title"><span class="num">01</span><div><h3>身体数据</h3><p>每天尽量在相同时间称重</p></div></div><div class="grid metrics"><label>体重（kg）<input id="weight" type="number" min="30" max="300" step=".1" placeholder="例如：80.0"></label><label>睡眠（小时）<input id="sleep" type="number" min="0" max="24" step=".5" placeholder="7.5"></label><label>步数<input id="steps" type="number" min="0" max="100000" placeholder="6000"></label><label>饮水（ml）<input id="water" type="number" min="0" max="10000" placeholder="1800"></label></div></section>
     <section class="section"><div class="section-title"><span class="num">02</span><div><h3>饮食与热量</h3><p>食物内容与 kcal 分开记录</p></div></div><div class="grid">
-      <div class="meal-entry"><label>早餐<textarea id="breakfast" rows="1" placeholder="鸡蛋、牛奶"></textarea></label><div class="kcal-row"><span>热量</span><input id="breakfastCal" class="meal-cal" type="number" min="0" placeholder="0"><b>kcal</b><button class="ai-btn" type="button" data-meal="breakfast">AI估算</button></div><p class="ai-result" id="breakfastAi"></p></div>
-      <div class="meal-entry"><label>午餐<textarea id="lunch" rows="1" placeholder="米饭、牛肉和蔬菜"></textarea></label><div class="kcal-row"><span>热量</span><input id="lunchCal" class="meal-cal" type="number" min="0" placeholder="0"><b>kcal</b><button class="ai-btn" type="button" data-meal="lunch">AI估算</button></div><p class="ai-result" id="lunchAi"></p></div>
-      <div class="meal-entry"><label>晚餐<textarea id="dinner" rows="1" placeholder="鸡胸肉沙拉"></textarea></label><div class="kcal-row"><span>热量</span><input id="dinnerCal" class="meal-cal" type="number" min="0" placeholder="0"><b>kcal</b><button class="ai-btn" type="button" data-meal="dinner">AI估算</button></div><p class="ai-result" id="dinnerAi"></p></div>
-      <div class="meal-entry"><label>加餐<textarea id="snacks" rows="1" placeholder="水果、饮料或零食"></textarea></label><div class="kcal-row"><span>热量</span><input id="snacksCal" class="meal-cal" type="number" min="0" placeholder="0"><b>kcal</b><button class="ai-btn" type="button" data-meal="snacks">AI估算</button></div><p class="ai-result" id="snacksAi"></p></div>
+      <div class="meal-entry"><div class="meal-head"><b>早餐</b><span class="kcal-box"><input id="breakfastCal" class="meal-cal" type="number" inputmode="numeric" min="0" placeholder="0" aria-label="早餐热量（kcal）"><i>kcal</i></span></div><div class="meal-food"><textarea id="breakfast" rows="1" placeholder="如：2个鸡蛋、1杯豆浆" aria-label="早餐吃了什么"></textarea><button class="ai-btn" type="button" data-meal="breakfast">AI估算</button></div><p class="ai-result" id="breakfastAi"></p></div>
+      <div class="meal-entry"><div class="meal-head"><b>午餐</b><span class="kcal-box"><input id="lunchCal" class="meal-cal" type="number" inputmode="numeric" min="0" placeholder="0" aria-label="午餐热量（kcal）"><i>kcal</i></span></div><div class="meal-food"><textarea id="lunch" rows="1" placeholder="如：1碗米饭、青椒肉丝" aria-label="午餐吃了什么"></textarea><button class="ai-btn" type="button" data-meal="lunch">AI估算</button></div><p class="ai-result" id="lunchAi"></p></div>
+      <div class="meal-entry"><div class="meal-head"><b>晚餐</b><span class="kcal-box"><input id="dinnerCal" class="meal-cal" type="number" inputmode="numeric" min="0" placeholder="0" aria-label="晚餐热量（kcal）"><i>kcal</i></span></div><div class="meal-food"><textarea id="dinner" rows="1" placeholder="如：鸡胸肉沙拉、1个玉米" aria-label="晚餐吃了什么"></textarea><button class="ai-btn" type="button" data-meal="dinner">AI估算</button></div><p class="ai-result" id="dinnerAi"></p></div>
+      <div class="meal-entry"><div class="meal-head"><b>加餐</b><span class="kcal-box"><input id="snacksCal" class="meal-cal" type="number" inputmode="numeric" min="0" placeholder="0" aria-label="加餐热量（kcal）"><i>kcal</i></span></div><div class="meal-food"><textarea id="snacks" rows="1" placeholder="如：1个苹果、半糖奶茶" aria-label="加餐吃了什么"></textarea><button class="ai-btn" type="button" data-meal="snacks">AI估算</button></div><p class="ai-result" id="snacksAi"></p></div>
     </div></section>
     <section class="section"><div class="section-title"><span class="num">03</span><div><h3>运动完成</h3><p>记录实际完成量</p></div></div><div class="grid pair"><label>走路（分钟）<input id="walkMinutes" type="number" min="0" max="600" placeholder="30"></label><label>俯卧撑（个）<input id="pushups" type="number" min="0" max="1000" placeholder="0"></label></div></section>
     <section class="section"><div class="section-title"><span class="num">04</span><div><h3>身体感受</h3><p>用于调整明天的计划</p></div></div><div class="segments"><input id="good" name="condition" value="good" type="radio" checked><label for="good">状态不错</label><input id="tired" name="condition" value="tired" type="radio"><label for="tired">有点累</label><input id="pain" name="condition" value="pain" type="radio"><label for="pain">身体疼痛</label></div><label>备注<textarea id="notes" rows="2" placeholder="今天的感受或疼痛位置"></textarea></label></section>
@@ -58,10 +213,10 @@ main{padding-top:12px}.stat{padding:11px 12px}.progress{padding:10px 2px}.calori
 <section class="view" id="reportView" hidden><div class="row page-head"><div><p class="eyebrow">最近7天</p><h2>每周分析</h2><p>看见变化，也给身体一些耐心</p></div><button class="secondary" id="copyBtn" type="button">复制报告</button></div><div class="chart"><p>体重趋势（kg）</p><svg id="weightChart" viewBox="0 0 330 165" aria-label="体重趋势图"></svg></div><div class="report-content" id="reportContent"></div></section>
 <section class="view" id="profileView" hidden><div class="page-head"><p class="eyebrow">基础资料</p><h2>我的计划</h2><p>资料只保存在当前设备</p></div>
   <form class="panel" id="profileForm"><div class="grid profile-grid"><label>性别<select id="sex"><option value="male">男</option><option value="female">女</option></select></label><label>年龄<input id="age" type="number" min="12" max="100" placeholder="27"></label><label>身高（cm）<input id="height" type="number" min="100" max="250" placeholder="175"></label><label>初始体重（kg）<input id="startWeight" type="number" step=".1" placeholder="102"></label><label>目标体重（kg）<input id="targetWeight" type="number" step=".1" placeholder="75"></label><label>每日可运动（分钟）<input id="availableMinutes" type="number" min="10" max="180" value="40"></label><label>每日热量目标（kcal）<input id="profileCalorieTarget" type="number" min="800" max="5000" placeholder="2100"></label></div><label class="check-row"><input id="healthConfirmed" type="checkbox"><span>目前无已知高血压或心脏问题</span></label><button class="primary" type="submit"><span>保存个人资料</span><span>→</span></button><p class="message" id="profileMessage"></p></form>
-  <section class="data-tools ai-tools"><h3>AI 热量估算</h3><p>填入你自己的 Anthropic API Key 后，每餐都能用「AI估算」。Key 只保存在当前浏览器，不会写进导出的备份。每次估算按 API 用量计费。</p><input id="apiKey" type="password" autocomplete="off" placeholder="API Key：sk-ant-..."><input id="apiBase" type="url" autocomplete="off" placeholder="API 地址（可选，留空 = 官方 https://api.anthropic.com）"><div class="tools"><button class="secondary" id="saveKeyBtn" type="button">保存设置</button><button class="danger" id="clearKeyBtn" type="button">清除设置</button></div><p class="message" id="keyMessage"></p></section><section class="data-tools"><h3>数据管理</h3><p>记录只保存在当前浏览器，建议定期导出备份。</p><div class="tools"><button class="secondary" id="exportBtn" type="button">导出备份</button><label class="secondary file-btn">导入备份<input id="importInput" type="file" accept="application/json" hidden></label><button class="danger" id="clearBtn" type="button">清空记录</button></div></section>
+  <section class="data-tools ai-tools"><h3>AI 热量估算</h3><p>选择服务商并填入你自己的 API Key 后，每餐都能用「AI估算」。Key 只保存在当前浏览器，不会写进导出的备份。每次估算按 API 用量计费。</p><select id="aiProvider"><option value="bailian">阿里云百炼（通义千问）</option><option value="deepseek">DeepSeek 官方</option><option value="custom">自定义（OpenAI 兼容，如 PackyAPI）</option><option value="claude">Claude（需通用 API Key）</option></select><input id="apiKey" type="password" autocomplete="off" placeholder="API Key"><input id="apiBase" type="url" autocomplete="off" placeholder="API 地址（百炼/DeepSeek 可留空；自定义需填，如 https://xxx/v1）"><input id="aiModel" type="text" autocomplete="off" placeholder="模型名（百炼/DeepSeek 可留空；自定义需填该 Key 分组支持的模型）"><div class="tools"><button class="secondary" id="saveKeyBtn" type="button">保存设置</button><button class="danger" id="clearKeyBtn" type="button">清除设置</button></div><p class="message" id="keyMessage"></p></section><section class="data-tools"><h3>数据管理</h3><p>记录只保存在当前浏览器，建议定期导出备份。</p><div class="tools"><button class="secondary" id="exportBtn" type="button">导出备份</button><label class="secondary file-btn">导入备份<input id="importInput" type="file" accept="application/json" hidden></label><button class="danger" id="clearBtn" type="button">清空记录</button></div></section>
 </section>
 </main>
-<nav><button class="nav-btn active" data-view="todayView"><span>⌂</span>今日</button><button class="nav-btn" data-view="historyView"><span>≡</span>记录</button><button class="nav-btn" data-view="reportView"><span>↗</span>周报</button><button class="nav-btn" data-view="profileView"><span>◎</span>我的</button></nav>
+<nav><button class="nav-btn active" data-view="todayView"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10"/></svg>今日</button><button class="nav-btn" data-view="historyView"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 6h14M5 12h14M5 18h9"/></svg>记录</button><button class="nav-add" id="navAdd" type="button" aria-label="记录今天">＋</button><button class="nav-btn" data-view="reportView"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20v-7M12 20V5M19 20V10"/></svg>周报</button><button class="nav-btn" data-view="profileView"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>我的</button></nav>
 <script src="app.js"></script>
 </body>
 </html>
